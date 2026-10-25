@@ -1,8 +1,6 @@
 name: Deploy to GitHub Pages
 
 on:
-  release:
-    types: [published]
   workflow_dispatch:
     inputs:
       tag:
@@ -31,7 +29,7 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
           GH_REPO: ${{ github.repository }}
-          RELEASE_TAG: ${{ github.event.release.tag_name || inputs.tag }}
+          RELEASE_TAG: ${{ inputs.tag }}
         shell: bash
         run: |
           if [ -n "$RELEASE_TAG" ]; then
