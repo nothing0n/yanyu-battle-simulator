@@ -10,7 +10,8 @@ export function resolveAtlasFont(assets,inputPath){
  * to this presentation recorder, separate from battle result generation. */
 export async function createFloatingTextRecorder({readJSON,visualSeed=1}={}){
  const read=readJSON||(async url=>{const r=await fetch(url);if(!r.ok)throw Error('Cannot load '+url);return r.json();});
- const bundle=await read(new URL('./bundles/JHBaseRole.json',import.meta.url));
+ const [bundle,assets]=await Promise.all([read(new URL('./bundles/JHBaseRole.json',import.meta.url)),read(new URL('../data/presentation-assets.json',import.meta.url))]);
+ const spriteFrames=new Map(Object.values(assets.spriteSheets).flatMap(sheet=>Object.entries(sheet.frames)));
  const vm=new LuaVM(),random=new AndroidIntegerRNG(visualSeed),indices=new Map();vm.load(bundle,'presentation/floating/JHBaseRole');
  const data=v=>v instanceof LuaClosure?{callback:v.proto.id}:v instanceof LuaTable?Array.from(v.entries.values(),data):Array.isArray(v)?v.map(data):v&&typeof v==='object'?Object.fromEntries(Object.entries(v).filter(([,x])=>typeof x!=='function').map(([k,x])=>[k,data(x)])):v;
  let nodes=[],rng=[];
@@ -21,7 +22,8 @@ export async function createFloatingTextRecorder({readJSON,visualSeed=1}={}){
   obj.setPositionY=(_,y)=>{out.position[1]=y;};obj.getPositionY=()=>out.position[1];
   obj.addChild=(_,x)=>{out.children.push(x.__output);x.__output.parent=out.id;};
   obj.runAction=(_,x)=>{out.actions.push(data(x));};
-  obj.getContentSize=()=>({width:(out.text?.length??0)*(out.cellWidth??0),height:out.cellHeight??0});
+  obj.setContentSize=(_,width,height)=>{out.contentSize=typeof width==='object'?{width:vm.get(width,'width'),height:vm.get(width,'height')}:{width,height};};
+  obj.getContentSize=()=>out.contentSize||({width:(out.text?.length??0)*(out.cellWidth??0),height:out.cellHeight??0});
   const named=new Map();
   obj.getChildByName=(_,name)=>{if(!named.has(name)){const child=node('NamedChild',{name});named.set(name,child);obj.addChild(obj,child);}return named.get(name);};
   obj.__output=out;nodes.push(out);return obj;
@@ -29,12 +31,15 @@ export async function createFloatingTextRecorder({readJSON,visualSeed=1}={}){
  vm.globals.math.random=(...args)=>{const result=random.random(...args);rng.push({args,result});return result;};
  vm.globals.string.gsub=(s,p,r)=>{if(p!=='-'&&p!=='+')throw Error('Unsupported floating-label Lua pattern '+p);return multi(s.split(p).join(r),s.split(p).length-1);};
  const cc={p:(x,y)=>({x,y})};
- cc.LabelAtlas={_create:(_,text,path,cellWidth,cellHeight,start)=>node('LabelAtlas',{text,path,cellWidth,cellHeight,start})};
+ // Cocos LabelAtlas accepts numeric Lua values and renders their string form.
+ cc.LabelAtlas={_create:(_,text,path,cellWidth,cellHeight,start)=>node('LabelAtlas',{text:String(text),path,cellWidth,cellHeight,start})};
+ cc.Node={create:()=>node('Node')};
+ cc.Sprite={createWithSpriteFrameName:(_,name)=>{const frame=spriteFrames.get(name);if(!frame)throw Error('Unmapped original floating sprite '+name);return node('Sprite',{spriteFrame:name,contentSize:{width:frame.sourceSize[0],height:frame.sourceSize[1]}});}};
  for(const kind of ['Sequence','Spawn','FadeIn','FadeOut','FadeTo','ScaleTo','MoveBy','MoveTo','DelayTime','RemoveSelf','CallFunc'])cc[kind]={create:(_,...params)=>({kind,params:params.map(data)})};
  vm.globals.cc=cc;
  const studio={getNodeFromFile:(path)=>{const root=node('CocosStudio',{path}),timeline={kind:'CocosTimeline',path,gotoFrameAndPlay:(_,frame,loop)=>{root.__output.timeline={frame,loop};}};return multi(root,timeline);}};
  function record(method,args=[],{actorKey='default',flip=false,hurtIndex}={}){
-  if(!['addHp','addMp','playMiss','playMissPo'].includes(method))throw Error('Unsupported floating-text method '+method);
+  if(!['addHp','addMp','addNJHp','playMiss','playMissPo'].includes(method))throw Error('Unsupported floating-text method '+method);
   nodes=[];rng=[];const actor=node('Actor');
   Object.assign(actor,{m_bIsFlipX:flip,m_nHurtIndex:hurtIndex??indices.get(actorKey)??0});
   const before=actor.m_nHurtIndex;

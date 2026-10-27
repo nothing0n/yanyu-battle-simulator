@@ -1,0 +1,945 @@
+{
+  "version": 1,
+  "coveredLevels": {
+    "min": 1,
+    "max": 3,
+    "fullEffectFrom": 3,
+    "gameMaximumVerified": false,
+    "note": "网页只开放已核对的1–3级；3级是buff开启阈值，不宣称游戏最高等级。"
+  },
+  "geometry": [
+    {
+      "stand": 1,
+      "lane": 0,
+      "depth": 0,
+      "label": "上排前位"
+    },
+    {
+      "stand": 2,
+      "lane": 0,
+      "depth": 2,
+      "label": "上排后位"
+    },
+    {
+      "stand": 3,
+      "lane": 1,
+      "depth": 0,
+      "label": "中排前位"
+    },
+    {
+      "stand": 4,
+      "lane": 1,
+      "depth": 1,
+      "label": "中排中位"
+    },
+    {
+      "stand": 5,
+      "lane": 1,
+      "depth": 2,
+      "label": "中排后位"
+    },
+    {
+      "stand": 6,
+      "lane": 2,
+      "depth": 0,
+      "label": "下排前位"
+    },
+    {
+      "stand": 7,
+      "lane": 2,
+      "depth": 2,
+      "label": "下排后位"
+    }
+  ],
+  "orientation": {
+    "depth": "0前、1中、2后；前表示朝向对手",
+    "rightSideMirrors": true
+  },
+  "formations": [
+    {
+      "id": 508,
+      "name": "四方阵",
+      "aliases": [],
+      "description": "此阵法由血衣楼的施无道所创，该阵法可攻可守，位于阵眼之人可受四方之护。",
+      "allowedSlots": [
+        1,
+        2,
+        4,
+        6,
+        7
+      ],
+      "eyeSlots": [
+        4
+      ],
+      "slots": [
+        {
+          "stand": 1,
+          "lane": 0,
+          "depth": 0,
+          "label": "极北",
+          "geometryLabel": "上排前位",
+          "allowed": true,
+          "eye": false,
+          "disabledReason": null
+        },
+        {
+          "stand": 2,
+          "lane": 0,
+          "depth": 2,
+          "label": "极东",
+          "geometryLabel": "上排后位",
+          "allowed": true,
+          "eye": false,
+          "disabledReason": null
+        },
+        {
+          "stand": 3,
+          "lane": 1,
+          "depth": 0,
+          "label": "中排前位",
+          "geometryLabel": "中排前位",
+          "allowed": false,
+          "eye": false,
+          "disabledReason": "四方阵原站位配置未开放3号位"
+        },
+        {
+          "stand": 4,
+          "lane": 1,
+          "depth": 1,
+          "label": "极中",
+          "geometryLabel": "中排中位",
+          "allowed": true,
+          "eye": true,
+          "disabledReason": null
+        },
+        {
+          "stand": 5,
+          "lane": 1,
+          "depth": 2,
+          "label": "中排后位",
+          "geometryLabel": "中排后位",
+          "allowed": false,
+          "eye": false,
+          "disabledReason": "四方阵原站位配置未开放5号位"
+        },
+        {
+          "stand": 6,
+          "lane": 2,
+          "depth": 0,
+          "label": "极西",
+          "geometryLabel": "下排前位",
+          "allowed": true,
+          "eye": false,
+          "disabledReason": null
+        },
+        {
+          "stand": 7,
+          "lane": 2,
+          "depth": 2,
+          "label": "极南",
+          "geometryLabel": "下排后位",
+          "allowed": true,
+          "eye": false,
+          "disabledReason": null
+        }
+      ],
+      "presets": {
+        "general": {
+          "main": 2,
+          "step": 7,
+          "barbarian": 1,
+          "other": 6
+        },
+        "yijian": {
+          "main": 1,
+          "step": 2,
+          "barbarian": 4,
+          "other": 6
+        }
+      },
+      "notes": [
+        "4位是阵眼；中心条件效果按1/2/6/7是否在场逐项决定。",
+        "一般预设用1/2/6/7，中心空，不能取得中心八极效果。"
+      ],
+      "nativeFields": {
+        "pro1": {
+          "1": "buff_round",
+          "2": 283
+        },
+        "pro2": {
+          "1": "buff_round",
+          "2": 283
+        },
+        "tj_pro4": {
+          "1": {
+            "1": 1,
+            "2": "buff_round",
+            "3": 282
+          },
+          "2": {
+            "1": 2,
+            "2": "buff_round",
+            "3": 282
+          },
+          "3": {
+            "1": 6,
+            "2": "buff_round",
+            "3": 282
+          },
+          "4": {
+            "1": 7,
+            "2": "buff_round",
+            "3": 282
+          }
+        },
+        "pro6": {
+          "1": "buff_round",
+          "2": 283
+        },
+        "pro7": {
+          "1": "buff_round",
+          "2": 283
+        }
+      }
+    },
+    {
+      "id": 515,
+      "name": "云垂阵",
+      "aliases": [],
+      "description": "云垂阵是名震千古的八阵兵法图中的一个阵法。此阵法攻守兼备，如流云般灵动，又如金戈般强硬，使敌人防不胜防，无从下手。",
+      "allowedSlots": [
+        3,
+        5,
+        6,
+        7
+      ],
+      "eyeSlots": [],
+      "slots": [
+        {
+          "stand": 1,
+          "lane": 0,
+          "depth": 0,
+          "label": "上排前位",
+          "geometryLabel": "上排前位",
+          "allowed": false,
+          "eye": false,
+          "disabledReason": "云垂阵原站位配置未开放1号位"
+        },
+        {
+          "stand": 2,
+          "lane": 0,
+          "depth": 2,
+          "label": "上排后位",
+          "geometryLabel": "上排后位",
+          "allowed": false,
+          "eye": false,
+          "disabledReason": "云垂阵原站位配置未开放2号位"
+        },
+        {
+          "stand": 3,
+          "lane": 1,
+          "depth": 0,
+          "label": "天垒",
+          "geometryLabel": "中排前位",
+          "allowed": true,
+          "eye": false,
+          "disabledReason": null
+        },
+        {
+          "stand": 4,
+          "lane": 1,
+          "depth": 1,
+          "label": "中排中位",
+          "geometryLabel": "中排中位",
+          "allowed": false,
+          "eye": false,
+          "disabledReason": "云垂阵原站位配置未开放4号位"
+        },
+        {
+          "stand": 5,
+          "lane": 1,
+          "depth": 2,
+          "label": "龙柱",
+          "geometryLabel": "中排后位",
+          "allowed": true,
+          "eye": false,
+          "disabledReason": null
+        },
+        {
+          "stand": 6,
+          "lane": 2,
+          "depth": 0,
+          "label": "垂云",
+          "geometryLabel": "下排前位",
+          "allowed": true,
+          "eye": false,
+          "disabledReason": null
+        },
+        {
+          "stand": 7,
+          "lane": 2,
+          "depth": 2,
+          "label": "翔鹰",
+          "geometryLabel": "下排后位",
+          "allowed": true,
+          "eye": false,
+          "disabledReason": null
+        }
+      ],
+      "presets": {
+        "general": {
+          "main": 5,
+          "step": 7,
+          "barbarian": 3,
+          "other": 6
+        },
+        "yijian": {
+          "main": 3,
+          "step": 5,
+          "barbarian": 6,
+          "other": 7
+        }
+      },
+      "notes": [
+        "易剑预设为主3步5、央6与另一角色7的2+2布局。"
+      ],
+      "nativeFields": {
+        "pro3": {
+          "1": "buff_round",
+          "2": 1121
+        },
+        "pro5": {
+          "1": "buff_round",
+          "2": 1124
+        },
+        "pro6": {
+          "1": "buff_round",
+          "2": 1122
+        },
+        "pro7": {
+          "1": "buff_round",
+          "2": 1123
+        }
+      }
+    },
+    {
+      "id": 519,
+      "name": "阵演万化",
+      "aliases": [
+        "万化阵"
+      ],
+      "description": "此阵法经由五行异步阵简化而来，虽不如五行异步阵变化多端，但简化后的阵法只需四人便可运行，且依然能发挥出不俗的功效，但需注意此阵法需有阵眼才可激活。",
+      "allowedSlots": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ],
+      "eyeSlots": [
+        4
+      ],
+      "slots": [
+        {
+          "stand": 1,
+          "lane": 0,
+          "depth": 0,
+          "label": "阵演万化",
+          "geometryLabel": "上排前位",
+          "allowed": true,
+          "eye": false,
+          "disabledReason": null
+        },
+        {
+          "stand": 2,
+          "lane": 0,
+          "depth": 2,
+          "label": "阵演万化",
+          "geometryLabel": "上排后位",
+          "allowed": true,
+          "eye": false,
+          "disabledReason": null
+        },
+        {
+          "stand": 3,
+          "lane": 1,
+          "depth": 0,
+          "label": "阵演万化",
+          "geometryLabel": "中排前位",
+          "allowed": true,
+          "eye": false,
+          "disabledReason": null
+        },
+        {
+          "stand": 4,
+          "lane": 1,
+          "depth": 1,
+          "label": "阵眼",
+          "geometryLabel": "中排中位",
+          "allowed": true,
+          "eye": true,
+          "disabledReason": null
+        },
+        {
+          "stand": 5,
+          "lane": 1,
+          "depth": 2,
+          "label": "阵演万化",
+          "geometryLabel": "中排后位",
+          "allowed": true,
+          "eye": false,
+          "disabledReason": null
+        },
+        {
+          "stand": 6,
+          "lane": 2,
+          "depth": 0,
+          "label": "阵演万化",
+          "geometryLabel": "下排前位",
+          "allowed": true,
+          "eye": false,
+          "disabledReason": null
+        },
+        {
+          "stand": 7,
+          "lane": 2,
+          "depth": 2,
+          "label": "阵演万化",
+          "geometryLabel": "下排后位",
+          "allowed": true,
+          "eye": false,
+          "disabledReason": null
+        }
+      ],
+      "presets": {
+        "general": {
+          "main": 5,
+          "step": 7,
+          "barbarian": 4,
+          "other": 6
+        },
+        "yijian": null
+      },
+      "notes": [
+        "4位阵眼在场才满足其余位置的关联效果条件；没有4位仍是可站布局，但阵眼条件效果不生效。",
+        "4位含原mp_back=-1字段；数值按等级/3结算，首次/每回合buff从等级3起可用。"
+      ],
+      "nativeFields": {
+        "tj_pro1": {
+          "1": {
+            "1": 4,
+            "2": "buff_round",
+            "3": 3044
+          },
+          "2": {
+            "1": 4,
+            "2": "buff_first",
+            "3": 3044
+          },
+          "3": {
+            "1": 4,
+            "2": "buff_first",
+            "3": 3044
+          }
+        },
+        "tj_pro2": {
+          "1": {
+            "1": 4,
+            "2": "buff_round",
+            "3": 3044
+          },
+          "2": {
+            "1": 4,
+            "2": "buff_first",
+            "3": 3044
+          },
+          "3": {
+            "1": 4,
+            "2": "buff_first",
+            "3": 3044
+          }
+        },
+        "tj_pro3": {
+          "1": {
+            "1": 4,
+            "2": "buff_round",
+            "3": 3044
+          },
+          "2": {
+            "1": 4,
+            "2": "buff_first",
+            "3": 3044
+          },
+          "3": {
+            "1": 4,
+            "2": "buff_first",
+            "3": 3044
+          }
+        },
+        "pro4": {
+          "1": {
+            "1": "buff_first",
+            "2": 3045
+          },
+          "2": {
+            "1": "mp_back",
+            "2": -1
+          }
+        },
+        "tj_pro5": {
+          "1": {
+            "1": 4,
+            "2": "buff_round",
+            "3": 3044
+          },
+          "2": {
+            "1": 4,
+            "2": "buff_first",
+            "3": 3044
+          },
+          "3": {
+            "1": 4,
+            "2": "buff_first",
+            "3": 3044
+          }
+        },
+        "tj_pro6": {
+          "1": {
+            "1": 4,
+            "2": "buff_round",
+            "3": 3044
+          },
+          "2": {
+            "1": 4,
+            "2": "buff_first",
+            "3": 3044
+          },
+          "3": {
+            "1": 4,
+            "2": "buff_first",
+            "3": 3044
+          }
+        },
+        "tj_pro7": {
+          "1": {
+            "1": 4,
+            "2": "buff_round",
+            "3": 3044
+          },
+          "2": {
+            "1": 4,
+            "2": "buff_first",
+            "3": 3044
+          },
+          "3": {
+            "1": 4,
+            "2": "buff_first",
+            "3": 3044
+          }
+        }
+      }
+    },
+    {
+      "id": 520,
+      "name": "四时阵",
+      "aliases": [],
+      "description": "诸葛长空自行于对战之中领悟而来的阵法，此阵法没有阵眼，阵中四人各司一职，攻守兼备。",
+      "allowedSlots": [
+        1,
+        3,
+        5,
+        7
+      ],
+      "eyeSlots": [],
+      "slots": [
+        {
+          "stand": 1,
+          "lane": 0,
+          "depth": 0,
+          "label": "春",
+          "geometryLabel": "上排前位",
+          "allowed": true,
+          "eye": false,
+          "disabledReason": null
+        },
+        {
+          "stand": 2,
+          "lane": 0,
+          "depth": 2,
+          "label": "上排后位",
+          "geometryLabel": "上排后位",
+          "allowed": false,
+          "eye": false,
+          "disabledReason": "四时阵原站位配置未开放2号位"
+        },
+        {
+          "stand": 3,
+          "lane": 1,
+          "depth": 0,
+          "label": "夏",
+          "geometryLabel": "中排前位",
+          "allowed": true,
+          "eye": false,
+          "disabledReason": null
+        },
+        {
+          "stand": 4,
+          "lane": 1,
+          "depth": 1,
+          "label": "中排中位",
+          "geometryLabel": "中排中位",
+          "allowed": false,
+          "eye": false,
+          "disabledReason": "四时阵原站位配置未开放4号位"
+        },
+        {
+          "stand": 5,
+          "lane": 1,
+          "depth": 2,
+          "label": "秋",
+          "geometryLabel": "中排后位",
+          "allowed": true,
+          "eye": false,
+          "disabledReason": null
+        },
+        {
+          "stand": 6,
+          "lane": 2,
+          "depth": 0,
+          "label": "下排前位",
+          "geometryLabel": "下排前位",
+          "allowed": false,
+          "eye": false,
+          "disabledReason": "四时阵原站位配置未开放6号位"
+        },
+        {
+          "stand": 7,
+          "lane": 2,
+          "depth": 2,
+          "label": "冬",
+          "geometryLabel": "下排后位",
+          "allowed": true,
+          "eye": false,
+          "disabledReason": null
+        }
+      ],
+      "presets": {
+        "general": null,
+        "yijian": {
+          "main": 3,
+          "step": 5,
+          "barbarian": 1,
+          "other": 7
+        }
+      },
+      "notes": [
+        "四时阵没有阵眼，1/3/5/7分别对应春夏秋冬。",
+        "四时阵520与四方阵508是不同阵法。"
+      ],
+      "nativeFields": {
+        "tj_pro1": {
+          "1": {
+            "1": 3,
+            "2": "buff_round",
+            "3": 3215,
+            "4": 1
+          },
+          "2": {
+            "1": 5,
+            "2": "buff_round",
+            "3": 3214,
+            "4": 1
+          },
+          "3": {
+            "1": 7,
+            "2": "buff_round",
+            "3": 3213,
+            "4": 1
+          }
+        },
+        "pro1": {
+          "1": "buff_first",
+          "2": 3217
+        },
+        "tj_pro3": {
+          "1": {
+            "1": 1,
+            "2": "buff_round",
+            "3": 3216,
+            "4": 1
+          },
+          "2": {
+            "1": 5,
+            "2": "buff_round",
+            "3": 3214,
+            "4": 1
+          },
+          "3": {
+            "1": 7,
+            "2": "buff_round",
+            "3": 3213,
+            "4": 1
+          }
+        },
+        "pro3": {
+          "1": "buff_first",
+          "2": 3218
+        },
+        "tj_pro5": {
+          "1": {
+            "1": 1,
+            "2": "buff_round",
+            "3": 3216,
+            "4": 1
+          },
+          "2": {
+            "1": 3,
+            "2": "buff_round",
+            "3": 3215,
+            "4": 1
+          },
+          "3": {
+            "1": 7,
+            "2": "buff_round",
+            "3": 3213,
+            "4": 1
+          }
+        },
+        "pro5": {
+          "1": "buff_first",
+          "2": 3219
+        },
+        "tj_pro7": {
+          "1": {
+            "1": 1,
+            "2": "buff_round",
+            "3": 3216,
+            "4": 1
+          },
+          "2": {
+            "1": 3,
+            "2": "buff_round",
+            "3": 3215,
+            "4": 1
+          },
+          "3": {
+            "1": 5,
+            "2": "buff_round",
+            "3": 3214,
+            "4": 1
+          }
+        },
+        "pro7": {
+          "1": "buff_first",
+          "2": 3220
+        }
+      }
+    }
+  ],
+  "teamPresets": [
+    {
+      "id": "R1",
+      "label": "对照队1（易剑）",
+      "preset": "yijian",
+      "formations": [
+        {
+          "id": 508,
+          "level": 3,
+          "stands": {
+            "main": 1,
+            "step": 2,
+            "barbarian": 4,
+            "merchant": 6
+          }
+        },
+        {
+          "id": 515,
+          "level": 3,
+          "stands": {
+            "main": 3,
+            "step": 5,
+            "barbarian": 6,
+            "merchant": 7
+          }
+        },
+        {
+          "id": 520,
+          "level": 3,
+          "stands": {
+            "main": 3,
+            "step": 5,
+            "barbarian": 1,
+            "merchant": 7
+          }
+        }
+      ]
+    },
+    {
+      "id": "R2",
+      "label": "对照队2（化玄）",
+      "preset": "general",
+      "formations": [
+        {
+          "id": 519,
+          "level": 3,
+          "stands": {
+            "main": 5,
+            "step": 7,
+            "barbarian": 4,
+            "snow": 6
+          }
+        },
+        {
+          "id": 515,
+          "level": 3,
+          "stands": {
+            "main": 5,
+            "step": 7,
+            "barbarian": 3,
+            "snow": 6
+          }
+        },
+        {
+          "id": 508,
+          "level": 3,
+          "stands": {
+            "main": 2,
+            "step": 7,
+            "barbarian": 1,
+            "snow": 6
+          }
+        }
+      ]
+    },
+    {
+      "id": "R3",
+      "label": "对照队3（雁羽/归云）",
+      "preset": "general",
+      "formations": [
+        {
+          "id": 519,
+          "level": 3,
+          "stands": {
+            "main": 5,
+            "step": 7,
+            "barbarian": 4,
+            "merchant": 6
+          }
+        },
+        {
+          "id": 515,
+          "level": 3,
+          "stands": {
+            "main": 5,
+            "step": 7,
+            "barbarian": 3,
+            "merchant": 6
+          }
+        },
+        {
+          "id": 508,
+          "level": 3,
+          "stands": {
+            "main": 2,
+            "step": 7,
+            "barbarian": 1,
+            "merchant": 6
+          }
+        }
+      ]
+    },
+    {
+      "id": "R63",
+      "label": "对照队4（雁羽/步天）",
+      "preset": "general",
+      "formations": [
+        {
+          "id": 519,
+          "level": 3,
+          "stands": {
+            "main": 5,
+            "step": 7,
+            "barbarian": 4,
+            "snow": 6
+          }
+        },
+        {
+          "id": 515,
+          "level": 3,
+          "stands": {
+            "main": 5,
+            "step": 7,
+            "barbarian": 3,
+            "snow": 6
+          }
+        },
+        {
+          "id": 508,
+          "level": 3,
+          "stands": {
+            "main": 2,
+            "step": 7,
+            "barbarian": 1,
+            "snow": 6
+          }
+        }
+      ]
+    },
+    {
+      "id": "U5",
+      "label": "对照队5（剑王组合）",
+      "preset": "general",
+      "formations": [
+        {
+          "id": 519,
+          "level": 3,
+          "stands": {
+            "main": 5,
+            "step": 7,
+            "barbarian": 4,
+            "snow": 6
+          }
+        },
+        {
+          "id": 515,
+          "level": 3,
+          "stands": {
+            "main": 5,
+            "step": 7,
+            "barbarian": 3,
+            "snow": 6
+          }
+        },
+        {
+          "id": 508,
+          "level": 3,
+          "stands": {
+            "main": 2,
+            "step": 7,
+            "barbarian": 1,
+            "snow": 6
+          }
+        }
+      ]
+    }
+  ],
+  "sourceSnapshot": {
+    "modelVersion": "73460",
+    "capturedDate": "2026-10-07",
+    "configuration": "zhenxing",
+    "configurationSha256": "b34aa3e21fbf7b80044d36e9a45812a0919aa32dcfb7414a1f742506ffcb2f13",
+    "methods": [
+      "JHBaseRoleData.setZhen",
+      "JHBaseRoleData.getZhenProp",
+      "JHBaseRoleData.getZhenLoc",
+      "JHBattleData.getZhenBuffs"
+    ]
+  },
+  "levelRules": {
+    "numericPropertyScale": "level / 3",
+    "buffsAvailableFrom": 3,
+    "execution": "由原角色getter和原战斗调度器读取Zhen/ZhenLv/Stand；此目录不替代原buff公式。"
+  }
+}

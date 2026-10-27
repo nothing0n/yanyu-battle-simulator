@@ -3,7 +3,7 @@ import {firstResult} from '../runtime/lua-vm.mjs';
 const own=(object,key)=>Object.prototype.hasOwnProperty.call(object,key);
 const kinds={wai:{kind:'TL',table:'kongfu_tl_data',upgrade:'kongfu_zsupgrade_data'},nei:{kind:'NG',table:'kongfu_ng_data',upgrade:'kongfu_ngupgrade_data'},qing:{kind:'QG',table:'kongfu_dodge_data',upgrade:'kongfu_dodgeupgrade_data'}};
 const forms={yin:1,yang:2,mixed:3};
-const keys=new Set(['form','stage','specialProp','jingjins','yuhuaChoices']);
+const keys=new Set(['form','stage','specialProp','jingjins','yuhuaChoices','wuduStage']);
 const yuhuaGroups={
   second:{yangyu:[23722],yingxue:[123722],suoqi:[123721]},
   third:{zhenyuan:[23723],zhenshan:[123723],zhenliu:[123724]},
@@ -28,6 +28,9 @@ export function resolveSkillSelection(runtime,{key,id,options={}}){
   if(!cfg)throw new Error(`武学 ${id} 不属于${{wai:'外功',nei:'内功',qing:'轻功'}[key]}栏。`);
   if(!options||typeof options!=='object'||Array.isArray(options))throw new Error('武学选项须为对象。');
   for(const field of Object.keys(options))if(!keys.has(field))throw new Error(`未知武学选项：${field}`);
+  if(own(options,'wuduStage')&&!(key==='wai'&&id===20510))throw new Error('只有五毒神掌可以选择 wuduStage。');
+  const wuduStage=key==='wai'&&id===20510?(options.wuduStage??'book'):undefined;
+  if(wuduStage&&!['book','improved'].includes(wuduStage))throw new Error('五毒阶段只能为 book 或 improved。');
   if(own(options,'form')&&!(key==='nei'&&id===53060))throw new Error('只有归云诀可以选择体态 form。');
   if(own(options,'stage')&&!(key==='nei'&&id===23620))throw new Error('只有镇派道心种魔可以选择进阶 stage。');
   if(own(options,'yuhuaChoices')&&!(key==='nei'&&id===23720))throw new Error('只有羽化真功可以选择 yuhuaChoices。');
@@ -55,6 +58,13 @@ export function resolveSkillSelection(runtime,{key,id,options={}}){
   // The target skills have alternative acquisitions; never activate every row.
   // Saved-state imports use the player's exact serialized list instead.
   let groups=[];
+  // Original book1046 grants20511..20516. Story fun1878 replaces14->17
+  // and15->18 for either a main or companion. These are alternative learned
+  // states, not additional passives. JJ allocation does not imply this quest.
+  if(id===20510&&key==='wai')groups=[
+    {ids:[20514,20517],selected:wuduStage==='improved'?20517:20514},
+    {ids:[20515,20518],selected:wuduStage==='improved'?20518:20515},
+  ];
   if(id===23620&&key==='nei'){
     groups=[{ids:[23623,23626],selected:stage==='four-sha'?23623:23626},{ids:[23624,23627],selected:stage==='six-sha'?23627:23624}];
   }
@@ -110,7 +120,7 @@ export function resolveSkillSelection(runtime,{key,id,options={}}){
     });
   }
   const replacementGroups=groups.filter(group=>!group.choice||own(options.yuhuaChoices??{},group.choice));
-  return {key,id,zhaoIds:selectedIds,specialProp,specialPropExplicit:own(options,'specialProp')||own(options,'form'),jingjins,groups,replacementGroups,replaceBranches:own(options,'form')||own(options,'stage')||(id===53060&&own(options,'specialProp'))||Object.keys(options.yuhuaChoices??{}).length>0,form,stage,yuhuaChoices};
+  return {key,id,zhaoIds:selectedIds,specialProp,specialPropExplicit:own(options,'specialProp')||own(options,'form'),jingjins,groups,replacementGroups,replaceBranches:own(options,'form')||own(options,'stage')||own(options,'wuduStage')||(id===53060&&own(options,'specialProp'))||Object.keys(options.yuhuaChoices??{}).length>0,form,stage,yuhuaChoices,wuduStage};
 }
 
 /** Apply acquisition choices to an in-memory skill using original model methods.

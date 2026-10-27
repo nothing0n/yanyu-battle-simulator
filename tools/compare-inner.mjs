@@ -141,7 +141,7 @@ function argumentsFor(argv) {
   return options;
 }
 
-function buildTasks(fixture, options, seeds) {
+export function buildTasks(fixture, options, seeds) {
   if (!fixture?.ally?.length || !fixture?.variants?.length || !fixture?.matchups?.length) throw new Error('Fixture requires ally, variants, and matchups');
   const nowSeconds = fixture.nowSeconds ?? 1792800000;
   if (!Number.isSafeInteger(nowSeconds) || nowSeconds < 1) throw new Error('Fixture nowSeconds must be a positive integer Unix timestamp');
@@ -162,7 +162,7 @@ function buildTasks(fixture, options, seeds) {
     if (variant.skillLevels) hero.skillLevels = {...hero.skillLevels, ...clone(variant.skillLevels)};
     if (hero.savedState && variant.stats) throw new Error('Raw saved-state variants must use original panel calculation, not stats overrides');
     if (variant.stats) Object.assign(hero.stats, variant.stats);
-    const config = {version:1, name:`constructed-${matchup.id}-${variant.id}`, seed, nowSeconds, instructionBudget, maxRounds:fixture.maxRounds || 50, teams:{ally, enemy:clone(matchup.enemy)}};
+    const config = {version:1, name:`constructed-${matchup.id}-${variant.id}`, seed, nowSeconds, instructionBudget, fightType:fixture.fightType ?? 1, maxRounds:fixture.maxRounds || 50, teams:{ally, enemy:clone(matchup.enemy)}};
     tasks.push({matchupId:matchup.id, variantId:variant.id, sampleIndex, seed, config});
   }
   return {tasks, variants, matchups};
@@ -285,8 +285,11 @@ async function main() {
     samplesPerCondition:options.samples, seedGenerator:'MurmurHash3 32-bit finalizer over base+i*0x9e3779b9; zero mapped to positive seed; duplicates skipped',
     baseSeed:options.seed, commonSeeds:seeds, variants, matchups:matchups.map(m => ({id:m.id,label:m.label})),
     frozenNowSeconds:fixture.nowSeconds ?? 1792800000,
+    fightType:fixture.fightType ?? 1,
+    fightTypeWasExplicit:fixture.fightType !== undefined,
+    serverArenaModeValidated:false,
     instructionBudget:fixture.instructionBudget ?? 5000000,
-    metricMeaning:{mainRawAttributedDamage:'Original stat; includes overkill and attributed status damage', mainRawDirectDamage:'Original direct sub_hp damage to enemies; includes overkill',
+    metricMeaning:{mainRawAttributedDamage:'Host-attributed sum of original message damage; includes overkill and attributed status damage, not a native game-returned damage counter', mainRawDirectDamage:'Original direct sub_hp damage to enemies; includes overkill',
       mainEffectiveDirectDamage:'Clipped direct damage, only when prior observed HP and the original direct result reconcile within 1 HP and there is no simultaneous HP buff effect; otherwise null. Gangqi/neijin effect records can make this conservative full-battle metric unavailable.',
       mainAuditedEffectiveDirectDamageSubtotal:'Sum of individually reconciled direct impacts; excludes ambiguous impacts and unassignable status damage',
       mainFinalAlive:'1 when main actor final HP is positive, including revived actors', mainFirstKnockdownRound:'First explicit die=true or nonpositive HP observation; null when unobserved; surviving/censored observations are not zero',

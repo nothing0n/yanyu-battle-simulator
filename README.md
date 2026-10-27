@@ -4,15 +4,11 @@
 
 网站地址：https://nothing0n.github.io/yanyu-battle-simulator/
 
-## 发布方式
+## 网页配置
 
-本仓库保存战斗运行层、输入适配、原模块和配置、去标识化回归样例及 GitHub Pages 工作流。大型美术资源继续随 `site.tar.gz` Release 附件分发；未提交个人存档、账号信息或私人战报。网站和 Release 附件公开访问。
+双方均可载入五个匿名队伍预设，独立选择阵法、等级和合法站位，编辑装备词条与秘技，并由原角色模型重算战前面板。另保留主角、于小雪、央蛮、桃花的夺天地研究基准。方案可在浏览器保存，或导入／导出JSON备份。
 
-1. 在本地项目根目录执行 `tar -czf site.tar.gz -C dist .`。压缩包根目录必须直接包含 `index.html`。
-2. 创建新 Release，目标为 `main`，上传 `site.tar.gz` 并等待上传完成，再发布 Release。
-3. 打开 Actions → Deploy to GitHub Pages → Run workflow，选择 `main`，填写 Release 标签，留空使用最新 Release。启动后自动下载、解压并部署。
-
-Pages 发布源设为 GitHub Actions。`github-pages` 环境保留仅允许 `main` 部署的规则。仓库不包含本地研究文件、运行日志或个人配置。
+阵法先开放已核对的1–3级；阵眼、位置及回合触发效果按原模型条件执行。榜单可见武学装备与隐藏培养估计分别说明，预设不是玩家完整存档。详见[阵容编辑器说明](docs/editor-workbench.md)。
 
 ## 本地验证
 
@@ -25,7 +21,17 @@ node tools/compare-inner.mjs --samples 200 --seed 20261027 --jobs 6 --out ./anal
 
 第二条命令是公开合成四对四基准，输出逐场结果、输入哈希、Wilson 胜率区间、配对差值区间、输出与生存指标。输出目录必须尚不存在。它衡量固定模型与构造对手下的表现，不代表真实竞技场对手分布或实机胜率。
 
-完整图形界面需要从 Release 解压 `dist/assets/` 到本仓库同路径，再运行 `npm start`。
+完整图形界面需要现有 Release 的美术资源：将 `site.tar.gz` 解压到临时目录，只把其中的 `assets/` 复制到本仓库的 `dist/assets/`，然后运行 `npm start`。保留当前仓库的HTML、脚本及配置文件。
+
+## 发布方式
+
+本仓库保存当前网页源码、战斗运行层、原模块和配置、公开条件预设及回归测试。提交并推送到`main`会触发GitHub Pages工作流：先运行`npm test`，再从现有`v0.2.0-pages.1` Release 的`site.tar.gz`中取得`assets/`，配合当前提交的`dist/`源码部署。
+
+工作流只使用旧Release中的美术资源。HTML、脚本和配置来自当前提交，避免用旧整站覆盖新编辑器。部署同时生成`version.json`，记录包版本、commit与构建时间，便于核对线上版本。
+
+也可在Actions中手动运行“Deploy to GitHub Pages”；可选`tag`参数用于指定兼容的美术底包Release，留空使用`v0.2.0-pages.1`。Pages发布源为GitHub Actions，`github-pages`环境保留仅允许`main`部署的规则。发布是否完成应以该提交的检查和Pages部署结果为准。
+
+仓库与站点不包含个人存档、账号信息或私人战报。大型美术文件仍由现有Release附件提供。
 
 ## 战斗兼容修复
 

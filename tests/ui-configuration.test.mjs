@@ -2,14 +2,21 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import fs from 'node:fs/promises';
 import vm from 'node:vm';
+import {createWorkbench} from '../dist/ui/editor-workbench.mjs';
 const source=await fs.readFile(new URL('../dist/app.js',import.meta.url),'utf8');
 const catalog=JSON.parse(await fs.readFile(new URL('../dist/data/catalog.json',import.meta.url),'utf8'));
 const weaponAppearance=JSON.parse(await fs.readFile(new URL('../dist/data/weapon-appearance.json',import.meta.url),'utf8'));
 const sceneCatalog=JSON.parse(await fs.readFile(new URL('../dist/data/presentation-backgrounds.json',import.meta.url),'utf8'));
 const elements=new Map();
 const element=id=>{if(!elements.has(id))elements.set(id,{innerHTML:'',textContent:'',disabled:false,querySelectorAll:()=>[]});return elements.get(id);};
-const context=vm.createContext({fixtureCatalog:catalog,fixtureWeaponAppearance:weaponAppearance,fixtureSceneCatalog:sceneCatalog,window:{},document:{getElementById:element,querySelectorAll:()=>[]}});
-vm.runInContext(source.slice(0,source.indexOf('async function init'))+'\nnormalizeCatalog(fixtureCatalog);weaponAppearance=fixtureWeaponAppearance;sceneCatalog=fixtureSceneCatalog;createDefault();',context);
+const context=vm.createContext({createWorkbench,fixtureCatalog:catalog,fixtureWeaponAppearance:weaponAppearance,fixtureSceneCatalog:sceneCatalog,window:{},document:{getElementById:element,querySelectorAll:()=>[]}});
+// These assertions exercise the legacy manual editor before browser bootstrap.
+// A classic VM script cannot parse static imports; inject the real dependency
+// and retain all production declarations and original assertions unchanged.
+const declarations=source.slice(0,source.indexOf('async function init'));
+const executable=declarations.replace(/^import\s*\{\s*createWorkbench\s*\}\s*from\s*['"]\.\/ui\/editor-workbench\.mjs['"];?\r?\n/m,'');
+assert.notEqual(executable,declarations,'the browser module dependency must be injected into the VM fixture');
+vm.runInContext(executable+'\nnormalizeCatalog(fixtureCatalog);weaponAppearance=fixtureWeaponAppearance;sceneCatalog=fixtureSceneCatalog;createDefault();',context,{filename:'app.js (legacy UI fixture)'});
 const run=code=>vm.runInContext(code,context);
 test('UI default formation uses only original seven targetable stands',()=>{const config=JSON.parse(run('JSON.stringify(validateConfig(config))'));assert.equal(config.teams.ally.length,4);assert.equal(config.teams.enemy.length,4);for(const side of ['ally','enemy']){assert.ok(config.teams[side].every(r=>r.position>=0&&r.position<=6));assert.equal(new Set(config.teams[side].map(r=>r.position)).size,4);}assert.throws(()=>run('validateConfig({...config,teams:{...config.teams,ally:config.teams.ally.map((r,i)=>({...r,position:i===0?7:r.position}))}})'),/7/);});
 test('seven displayed stands follow recovered camera offsets and mirror horizontally',()=>{run('renderBoard()');const expected={ally:[[4,1],[2,1],[5,2],[3,2],[1,2],[4,3],[2,3]],enemy:[[2,1],[4,1],[1,2],[3,2],[5,2],[2,3],[4,3]]};for(const side of ['ally','enemy']){const html=element(side+'Grid').innerHTML,buttons=[...html.matchAll(/<button (.*?)<\/button>/gs)];assert.equal(buttons.length,7);assert.equal((html.match(/data-role=/g)||[]).length,4);buttons.forEach((match,index)=>{const place=/grid-column:(\d+) \/ span 2;grid-row:(\d+)/.exec(match[1]);assert.ok(place);assert.deepEqual(place.slice(1).map(Number),expected[side][index]);});}});

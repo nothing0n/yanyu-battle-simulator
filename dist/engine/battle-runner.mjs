@@ -1,6 +1,12 @@
 import {LuaTable,firstResult} from '../runtime/lua-vm.mjs';
 import {createRuntime} from './runtime.mjs';
 
+export function resolveFightType(config){
+  const value=config.fightType??1;
+  if(value!==1&&value!==2)throw new Error('fightType must be 1 (original default) or 2 (original client PVP branches).');
+  return value;
+}
+
 export function luaToJSON(value,seen=new WeakSet()){
   if(!(value instanceof LuaTable))return typeof value==='function'?undefined:value;
   if(seen.has(value))return '[循环引用]';seen.add(value);
@@ -13,17 +19,24 @@ export function luaToJSON(value,seen=new WeakSet()){
 
 /** Advance the game's JHAITest/JHBaseAI directly, without a replacement turn loop. */
 export async function runOriginalBattle(config,options={}){
+  const fightType=resolveFightType(config);
   const runtime=await createRuntime({...options,seed:config.seed});
   const {vm}=runtime;
   runtime.require('app/ai/JHAIConfig');
   const ai=runtime.instantiate('app/ai/JHAITest');
+  // Call the original setter explicitly. Actor initForPVP does not set AI mode.
+  // Type 2 selects original client PVP branches; server arena parity is unproven.
+  runtime.callMethod(ai,'setFightType',fightType);
   // Use the original base class scheduler hooks; the web host supplies ticks.
   vm.set(ai,'startUpdate',vm.get(runtime.require('app/ai/JHBaseAI'),'startUpdate'));
   vm.set(ai,'stopUpdate',vm.get(runtime.require('app/ai/JHBaseAI'),'stopUpdate'));
   const random=vm.get(ai,'m_tRndCtl');
   if(random)vm.set(random,'__RandSeed',Math.max(1,Math.trunc(Number(config.seed)||1)));
   const actors=[];
-  const makeRole=options.createBattleRole || (await import('../integration/actors.mjs')).createBattleRole;
+  const makeRole=options.createBattleRole || (async(runtime,row,left,index)=>{
+    if(row.build){const {createEditorBattleRole}=await import('../integration/editor-model.mjs');return createEditorBattleRole(runtime,row,left,index);}
+    const {createBattleRole}=await import('../integration/actors.mjs');return createBattleRole(runtime,row,left,index);
+  });
   for(const [team,left] of [['ally',true],['enemy',false]]){
     for(const [index,row] of (config.teams?.[team]||[]).entries()){
       const actor=await makeRole(runtime,row,left,index);
@@ -60,7 +73,7 @@ export async function runOriginalBattle(config,options={}){
   const stats=actors.map(({actor,row,team})=>({uid:row.uid,name:row.name,team,damage:0,healing:0,taken:0,hp:runtime.firstMethod(actor,'getBattleHp'),maxHp:runtime.firstMethod(actor,'getBattleHpMax'),battleId:runtime.firstMethod(actor,'getBattleID')}));
   const events=convertMessages(messages,stats,id=>{for(const key of ['kongfu_zs_data','kongfu_ngf_data','kongfu_dodgef_data','play_kongfu_zs_data']){const row=vm.get(runtime.configFor(key),String(id));if(row)return vm.get(row,'name');}return String(id);},id=>{const row=vm.get(runtime.configFor('kongfu_buff'),String(id));return row?(vm.get(row,'buff')||String(id)):String(id);});
   if(limited)events.push({round,type:'end',rawType:'host_limit',text:`达到 ${roundLimit} 回合上限，停止推演`,snapshot:Object.fromEntries(stats.map(s=>[s.uid,s.hp]))});
-  return {winner:win==='Left'?'ally':win==='Right'?'enemy':'draw',rounds:round,events,stats,rawMessages:messages,metadata:{engine:'JHAITest + JHBaseAI original bytecode',snapshot:'73460 / 2026-10-07',frames,roundLimitReached:limited,seed:config.seed,missingImports:[...runtime.missing],originalBattleValidated:false,rngStatus:'original math wrapper and intRand bytecode; native getWhaleRand validated against 1536 ARM64 outputs',rngNativeVectors:1536,unattributedDamage:events.reduce((n,event)=>n+(event.unattributed?event.damage:0),0),statisticsMeaning:'Raw damage and healing include overkill and overhealing; buff damage without a source ID is recorded as taken but not attributed to an attacker',validationScope:'Original code executes; a complete replay has not yet been compared frame by frame with the game'}};
+  return {winner:win==='Left'?'ally':win==='Right'?'enemy':'draw',rounds:round,events,stats,rawMessages:messages,metadata:{engine:'JHAITest + JHBaseAI original bytecode',snapshot:'73460 / 2026-10-07',fightType,serverArenaModeValidated:false,frames,roundLimitReached:limited,seed:config.seed,missingImports:[...runtime.missing],originalBattleValidated:false,rngStatus:'original math wrapper and intRand bytecode; native getWhaleRand validated against 1536 ARM64 outputs',rngNativeVectors:1536,unattributedDamage:events.reduce((n,event)=>n+(event.unattributed?event.damage:0),0),statisticsMeaning:'Raw damage and healing include overkill and overhealing; buff damage without a source ID is recorded as taken but not attributed to an attacker',validationScope:'Original code executes; a complete replay has not yet been compared frame by frame with the game'}};
 }
 
 export function convertMessages(messages,stats,skillName=id=>String(id),buffName=id=>String(id)){

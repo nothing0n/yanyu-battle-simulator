@@ -8,10 +8,11 @@ const checks=[
  'constants.test.mjs','formula-vectors.mjs','formula-bytecode-differential.mjs',
  'formula-branch-state.mjs','rng-override.mjs','vm-semantics.mjs','vm-iteration.mjs',
  'vm-rng.mjs','vm-native-rng.mjs','actor-smoke.mjs','actor-matrix.mjs',
- 'skill-selection.mjs','save-panel.mjs','combat-evaluate.mjs','combat-runner-smoke.mjs',
+ 'skill-selection.mjs','save-panel.mjs','combat-evaluate.mjs','combat-fight-type.mjs','combat-runner-smoke.mjs',
  'combat-matrix.mjs','combat-repeat.mjs','weapon-adapter.mjs',
- 'ui-configuration.test.mjs','inner-benchmark-stats.mjs',
- 'presentation-rules-runtime.mjs',
+ 'ui-configuration.test.mjs','inner-benchmark-stats.mjs','formations.test.mjs',
+ 'editor-model.test.mjs','editor-ui.test.mjs',
+ 'presentation-rules-runtime.mjs','floating-text-neijin.test.mjs',
 ];
 const failed=[];
 for(const name of checks){
