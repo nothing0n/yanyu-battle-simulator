@@ -1,0 +1,656 @@
+{
+  "version": 1,
+  "scope": "Constructed 4v4 benchmark at equal supplied final panels. This is not the user's save, equipment-equivalent swapping, or observed arena opponent distribution.",
+  "mainUid": "hero",
+  "maxRounds": 50,
+  "variants": [
+    {
+      "id": "yuhua",
+      "label": "羽化真功·万化镇流/摘星问鼎构造路线",
+      "nei": 23720,
+      "skillOptions": {
+        "nei": {
+          "yuhuaChoices": {
+            "second": "yangyu",
+            "third": "zhenliu",
+            "fourth": "wending",
+            "fifth": "diyu"
+          }
+        }
+      }
+    },
+    {
+      "id": "guiyun-mixed",
+      "label": "归云诀·混元态",
+      "nei": 53060,
+      "skillOptions": {
+        "nei": {
+          "form": "mixed"
+        }
+      }
+    },
+    {
+      "id": "daoxin-six-sha",
+      "label": "道心种魔·假设已完成第六斩",
+      "nei": 23620,
+      "skillOptions": {
+        "nei": {
+          "stage": "six-sha"
+        }
+      }
+    }
+  ],
+  "ally": [
+    {
+      "uid": "hero",
+      "roleId": 10010,
+      "name": "构造主角",
+      "level": 100,
+      "position": 6,
+      "skills": {
+        "wai": 21750,
+        "nei": 23720,
+        "qing": 24370
+      },
+      "skillLevels": {
+        "wai": 10,
+        "nei": 10,
+        "qing": 10
+      },
+      "stats": {
+        "hp": 40000,
+        "atk": 10000,
+        "def": 7000,
+        "speed": 2000,
+        "hit": 2200,
+        "dodge": 1400,
+        "parry": 1600,
+        "mp": 50,
+        "mpBack": 8,
+        "str": 300,
+        "dex": 300,
+        "con": 300,
+        "int": 300,
+        "neijin": 1200,
+        "gangqi": 1200,
+        "weaponAtk": 0
+      }
+    },
+    {
+      "uid": "ally-a",
+      "roleId": 10012,
+      "name": "构造剑随",
+      "level": 100,
+      "position": 0,
+      "skills": {
+        "wai": 20380,
+        "nei": 22250,
+        "qing": 24320
+      },
+      "skillLevels": {
+        "wai": 10,
+        "nei": 10,
+        "qing": 10
+      },
+      "stats": {
+        "hp": 40000,
+        "atk": 10000,
+        "def": 7000,
+        "speed": 2000,
+        "hit": 2200,
+        "dodge": 1400,
+        "parry": 1600,
+        "mp": 50,
+        "mpBack": 8,
+        "str": 300,
+        "dex": 300,
+        "con": 300,
+        "int": 300,
+        "neijin": 1200,
+        "gangqi": 1200,
+        "weaponAtk": 0
+      }
+    },
+    {
+      "uid": "ally-b",
+      "roleId": 10011,
+      "name": "构造棍随",
+      "level": 100,
+      "position": 3,
+      "skills": {
+        "wai": 20570,
+        "nei": 22340,
+        "qing": 24010
+      },
+      "skillLevels": {
+        "wai": 10,
+        "nei": 10,
+        "qing": 10
+      },
+      "stats": {
+        "hp": 46000,
+        "atk": 8500,
+        "def": 8000,
+        "speed": 1800,
+        "hit": 2200,
+        "dodge": 1400,
+        "parry": 1600,
+        "mp": 50,
+        "mpBack": 8,
+        "str": 300,
+        "dex": 300,
+        "con": 300,
+        "int": 300,
+        "neijin": 1200,
+        "gangqi": 1200,
+        "weaponAtk": 0
+      }
+    },
+    {
+      "uid": "ally-c",
+      "roleId": 10015,
+      "name": "构造拳随",
+      "level": 100,
+      "position": 5,
+      "skills": {
+        "wai": 20460,
+        "nei": 22330,
+        "qing": 24410
+      },
+      "skillLevels": {
+        "wai": 10,
+        "nei": 10,
+        "qing": 10
+      },
+      "stats": {
+        "hp": 40000,
+        "atk": 10000,
+        "def": 7000,
+        "speed": 2000,
+        "hit": 2200,
+        "dodge": 1400,
+        "parry": 1600,
+        "mp": 50,
+        "mpBack": 8,
+        "str": 300,
+        "dex": 300,
+        "con": 300,
+        "int": 300,
+        "neijin": 1200,
+        "gangqi": 1200,
+        "weaponAtk": 0
+      }
+    }
+  ],
+  "matchups": [
+    {
+      "id": "burst",
+      "label": "构造快攻：低血高攻高初始真元",
+      "enemy": [
+        {
+          "uid": "enemy-a",
+          "roleId": 10010,
+          "name": "构造快攻主角",
+          "level": 100,
+          "position": 6,
+          "skills": {
+            "wai": 20390,
+            "nei": 22280,
+            "qing": 24320
+          },
+          "skillLevels": {
+            "wai": 10,
+            "nei": 10,
+            "qing": 10
+          },
+          "stats": {
+            "hp": 32000,
+            "atk": 12500,
+            "def": 6000,
+            "speed": 2400,
+            "hit": 2200,
+            "dodge": 1400,
+            "parry": 1600,
+            "mp": 80,
+            "mpBack": 8,
+            "str": 300,
+            "dex": 300,
+            "con": 300,
+            "int": 300,
+            "neijin": 1200,
+            "gangqi": 1200,
+            "weaponAtk": 0
+          }
+        },
+        {
+          "uid": "enemy-b",
+          "roleId": 10031,
+          "name": "构造快攻刀随",
+          "level": 100,
+          "position": 0,
+          "skills": {
+            "wai": 20390,
+            "nei": 22280,
+            "qing": 24320
+          },
+          "skillLevels": {
+            "wai": 10,
+            "nei": 10,
+            "qing": 10
+          },
+          "stats": {
+            "hp": 32000,
+            "atk": 12500,
+            "def": 6000,
+            "speed": 2400,
+            "hit": 2200,
+            "dodge": 1400,
+            "parry": 1600,
+            "mp": 80,
+            "mpBack": 8,
+            "str": 300,
+            "dex": 300,
+            "con": 300,
+            "int": 300,
+            "neijin": 1200,
+            "gangqi": 1200,
+            "weaponAtk": 0
+          }
+        },
+        {
+          "uid": "enemy-c",
+          "roleId": 10012,
+          "name": "构造快攻剑随",
+          "level": 100,
+          "position": 3,
+          "skills": {
+            "wai": 20380,
+            "nei": 22250,
+            "qing": 24320
+          },
+          "skillLevels": {
+            "wai": 10,
+            "nei": 10,
+            "qing": 10
+          },
+          "stats": {
+            "hp": 32000,
+            "atk": 12000,
+            "def": 6000,
+            "speed": 2300,
+            "hit": 2200,
+            "dodge": 1400,
+            "parry": 1600,
+            "mp": 80,
+            "mpBack": 8,
+            "str": 300,
+            "dex": 300,
+            "con": 300,
+            "int": 300,
+            "neijin": 1200,
+            "gangqi": 1200,
+            "weaponAtk": 0
+          }
+        },
+        {
+          "uid": "enemy-d",
+          "roleId": 10013,
+          "name": "构造快攻拳随",
+          "level": 100,
+          "position": 5,
+          "skills": {
+            "wai": 20460,
+            "nei": 22280,
+            "qing": 24410
+          },
+          "skillLevels": {
+            "wai": 10,
+            "nei": 10,
+            "qing": 10
+          },
+          "stats": {
+            "hp": 32000,
+            "atk": 12000,
+            "def": 6000,
+            "speed": 2300,
+            "hit": 2200,
+            "dodge": 1400,
+            "parry": 1600,
+            "mp": 80,
+            "mpBack": 8,
+            "str": 300,
+            "dex": 300,
+            "con": 300,
+            "int": 300,
+            "neijin": 1200,
+            "gangqi": 1200,
+            "weaponAtk": 0
+          }
+        }
+      ]
+    },
+    {
+      "id": "sustain",
+      "label": "构造持久：高血防与回复配置",
+      "enemy": [
+        {
+          "uid": "enemy-a",
+          "roleId": 10010,
+          "name": "构造持久主角",
+          "level": 100,
+          "position": 6,
+          "skills": {
+            "wai": 20570,
+            "nei": 22330,
+            "qing": 24320
+          },
+          "skillLevels": {
+            "wai": 10,
+            "nei": 10,
+            "qing": 10
+          },
+          "stats": {
+            "hp": 55000,
+            "atk": 8500,
+            "def": 8500,
+            "speed": 1700,
+            "hit": 2200,
+            "dodge": 1400,
+            "parry": 1600,
+            "mp": 40,
+            "mpBack": 8,
+            "str": 300,
+            "dex": 300,
+            "con": 300,
+            "int": 300,
+            "neijin": 1200,
+            "gangqi": 1200,
+            "weaponAtk": 0
+          }
+        },
+        {
+          "uid": "enemy-b",
+          "roleId": 10031,
+          "name": "构造持久刀随",
+          "level": 100,
+          "position": 0,
+          "skills": {
+            "wai": 20390,
+            "nei": 22130,
+            "qing": 24010
+          },
+          "skillLevels": {
+            "wai": 10,
+            "nei": 10,
+            "qing": 10
+          },
+          "stats": {
+            "hp": 55000,
+            "atk": 8500,
+            "def": 8500,
+            "speed": 1700,
+            "hit": 2200,
+            "dodge": 1400,
+            "parry": 1600,
+            "mp": 40,
+            "mpBack": 8,
+            "str": 300,
+            "dex": 300,
+            "con": 300,
+            "int": 300,
+            "neijin": 1200,
+            "gangqi": 1200,
+            "weaponAtk": 0
+          }
+        },
+        {
+          "uid": "enemy-c",
+          "roleId": 10015,
+          "name": "构造持久医随",
+          "level": 100,
+          "position": 3,
+          "skills": {
+            "wai": 20460,
+            "nei": 22340,
+            "qing": 24410
+          },
+          "skillLevels": {
+            "wai": 10,
+            "nei": 10,
+            "qing": 10
+          },
+          "stats": {
+            "hp": 55000,
+            "atk": 8000,
+            "def": 8500,
+            "speed": 1700,
+            "hit": 2200,
+            "dodge": 1400,
+            "parry": 1600,
+            "mp": 40,
+            "mpBack": 8,
+            "str": 300,
+            "dex": 300,
+            "con": 300,
+            "int": 300,
+            "neijin": 1200,
+            "gangqi": 1200,
+            "weaponAtk": 0
+          }
+        },
+        {
+          "uid": "enemy-d",
+          "roleId": 10011,
+          "name": "构造持久棍随",
+          "level": 100,
+          "position": 5,
+          "skills": {
+            "wai": 20570,
+            "nei": 22540,
+            "qing": 24010
+          },
+          "skillLevels": {
+            "wai": 10,
+            "nei": 10,
+            "qing": 10
+          },
+          "stats": {
+            "hp": 55000,
+            "atk": 8000,
+            "def": 8500,
+            "speed": 1700,
+            "hit": 2200,
+            "dodge": 1400,
+            "parry": 1600,
+            "mp": 40,
+            "mpBack": 8,
+            "str": 300,
+            "dex": 300,
+            "con": 300,
+            "int": 300,
+            "neijin": 1200,
+            "gangqi": 1200,
+            "weaponAtk": 0
+          }
+        }
+      ]
+    },
+    {
+      "id": "control",
+      "label": "构造资源压制：寒冰与羽化配置",
+      "enemy": [
+        {
+          "uid": "enemy-a",
+          "roleId": 10010,
+          "name": "构造控制主角",
+          "level": 100,
+          "position": 6,
+          "skills": {
+            "wai": 21750,
+            "nei": 23720,
+            "qing": 24370
+          },
+          "skillLevels": {
+            "wai": 10,
+            "nei": 10,
+            "qing": 10
+          },
+          "stats": {
+            "hp": 40000,
+            "atk": 9500,
+            "def": 7500,
+            "speed": 2200,
+            "hit": 2200,
+            "dodge": 1400,
+            "parry": 1600,
+            "mp": 60,
+            "mpBack": 8,
+            "str": 300,
+            "dex": 300,
+            "con": 300,
+            "int": 300,
+            "neijin": 1200,
+            "gangqi": 1200,
+            "weaponAtk": 0
+          }
+        },
+        {
+          "uid": "enemy-b",
+          "roleId": 10012,
+          "name": "构造寒冰剑随",
+          "level": 100,
+          "position": 0,
+          "skills": {
+            "wai": 20380,
+            "nei": 22080,
+            "qing": 24320
+          },
+          "skillLevels": {
+            "wai": 10,
+            "nei": 10,
+            "qing": 10
+          },
+          "stats": {
+            "hp": 40000,
+            "atk": 9500,
+            "def": 7500,
+            "speed": 2200,
+            "hit": 2200,
+            "dodge": 1400,
+            "parry": 1600,
+            "mp": 60,
+            "mpBack": 8,
+            "str": 300,
+            "dex": 300,
+            "con": 300,
+            "int": 300,
+            "neijin": 1200,
+            "gangqi": 1200,
+            "weaponAtk": 0
+          }
+        },
+        {
+          "uid": "enemy-c",
+          "roleId": 10013,
+          "name": "构造寒冰刀随",
+          "level": 100,
+          "position": 3,
+          "skills": {
+            "wai": 20390,
+            "nei": 22080,
+            "qing": 24320
+          },
+          "skillLevels": {
+            "wai": 10,
+            "nei": 10,
+            "qing": 10
+          },
+          "stats": {
+            "hp": 40000,
+            "atk": 9500,
+            "def": 7500,
+            "speed": 2200,
+            "hit": 2200,
+            "dodge": 1400,
+            "parry": 1600,
+            "mp": 60,
+            "mpBack": 8,
+            "str": 300,
+            "dex": 300,
+            "con": 300,
+            "int": 300,
+            "neijin": 1200,
+            "gangqi": 1200,
+            "weaponAtk": 0
+          }
+        },
+        {
+          "uid": "enemy-d",
+          "roleId": 10015,
+          "name": "构造碧波拳随",
+          "level": 100,
+          "position": 5,
+          "skills": {
+            "wai": 20460,
+            "nei": 22250,
+            "qing": 24410
+          },
+          "skillLevels": {
+            "wai": 10,
+            "nei": 10,
+            "qing": 10
+          },
+          "stats": {
+            "hp": 40000,
+            "atk": 9500,
+            "def": 7500,
+            "speed": 2200,
+            "hit": 2200,
+            "dodge": 1400,
+            "parry": 1600,
+            "mp": 60,
+            "mpBack": 8,
+            "str": 300,
+            "dex": 300,
+            "con": 300,
+            "int": 300,
+            "neijin": 1200,
+            "gangqi": 1200,
+            "weaponAtk": 0
+          }
+        }
+      ]
+    }
+  ],
+  "watchedBuffIds": [
+    1813,
+    1814,
+    1815,
+    1816,
+    1817,
+    1818,
+    1820,
+    1821,
+    1822,
+    2815,
+    2816,
+    2820,
+    5026,
+    5028,
+    5029,
+    5030,
+    5031,
+    5032,
+    5033,
+    5034
+  ],
+  "limitations": [
+    "All panels and opponents are synthetic. Equal supplied final stats isolate supported dynamic effects; they do not represent equal equipment or equal cultivation with different inner skills.",
+    "All selected skills are tenfold; no Jingjin, equipment affixes, meridians, secrets, formation, account-specific traits, or real arena records are supplied.",
+    "Default comparison chooses mixed Guiyun and six-sha Daoxin, explicitly assuming the sixth slaying milestone has been completed; tenfold skill level alone does not establish that milestone. Other forms/stages require explicitly different variants and separate reporting.",
+    "Synthetic Yuhua explicitly chooses third=zhenliu and fourth=wending, with second=yangyu and fifth=diyu. It has no Jingjin and is a constructed route, not the user's full owned state or every Yuhua build.",
+    "Main actor uses body-space movement 24370. Role passive behavior comes from the original configured role IDs.",
+    "Raw attributed damage/healing may include overkill/overhealing. Audited effective damage covers direct impacts only; ambiguous HP changes are excluded and signaled.",
+    "Missing buff observations are not proof a buff never acted; first-observed round metrics are conditional on original emitted messages."
+  ]
+}

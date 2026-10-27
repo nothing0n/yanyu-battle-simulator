@@ -1,0 +1,2 @@
+# Keep captured runtime/config bytes and deployed source hashes unchanged.
+* -text whitespace=cr-at-eol

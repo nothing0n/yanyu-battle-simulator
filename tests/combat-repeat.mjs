@@ -1,0 +1,18 @@
+import fs from 'node:fs';
+import assert from 'node:assert/strict';
+import {createEngine} from '../dist/engine/adapter.js';
+const engine=createEngine({worker:false,readJSON:async url=>JSON.parse(fs.readFileSync(url,'utf8'))});
+const role=(uid,roleId,name)=>({uid,roleId,name,position:0,level:90,skills:{wai:20010,nei:22010,qing:24010},skillLevels:{wai:10,nei:10,qing:10},stats:{hp:10000,atk:4500,def:2500,speed:700,hit:1000,dodge:500,parry:650,mp:30,mpBack:10,str:200,dex:200,con:200,int:200}});
+const config={seed:1001,maxRounds:20,teams:{ally:[role('a',10012,'苏念雪')],enemy:[role('b',10013,'厉若海')]}};
+const first=await engine.run(config),repeat=await engine.run(config),changed=await engine.run({...config,seed:1002});
+assert.deepEqual(repeat,first,'Identical seed and input must replay all original messages exactly');
+assert.notDeepEqual(changed.rawMessages,first.rawMessages,'Seed must reach original combat RNG');
+assert(first.events.some(x=>x.type==='damage'));
+assert(first.events.every(x=>!x.damage||x.damage>=0));
+for(const row of first.stats)assert.equal(first.events.at(-1).snapshot[row.uid],row.hp,'Replay final HP must match original role HP');
+assert.equal(first.metadata.rngNativeVectors,1536);
+assert.equal(first.metadata.originalBattleValidated,false,'Do not imply end-to-end real-game replay parity from code execution tests');
+assert.equal(engine.capabilities.battle,true);assert.equal(engine.capabilities.batch,true);
+const limited=await engine.run({...config,maxRounds:1});assert.equal(limited.winner,'draw');assert.equal(limited.rounds,1);assert(limited.metadata.roundLimitReached);assert(limited.rawMessages.every(x=>!x.round||x.round<=1),'Round limit must stop before next-round buffs and healing');assert.equal(limited.events.at(-1).rawType,'host_limit');
+engine.dispose();
+console.log(JSON.stringify({ok:true,checks:['seed replay','seed divergence','event damage sign','replay final HP','native RNG provenance','partial validation disclosure','enabled API','exact host round boundary'],winner:first.winner,rounds:first.rounds,events:first.events.length}));

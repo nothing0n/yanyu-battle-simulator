@@ -1,0 +1,56 @@
+import assert from 'node:assert/strict';
+import fs from 'node:fs';
+import {createRuntime} from '../dist/engine/runtime.mjs';
+import {luaToJSON} from '../dist/engine/battle-runner.mjs';
+import {createSavedBattleRole,readSavedBattlePanel,savedPartyRows} from '../dist/integration/save-panel.mjs';
+import {compileLiteral} from '../dist/integration/lua-literal.mjs';
+
+const readJSON=async url=>JSON.parse(fs.readFileSync(url,'utf8').replace(/^\uFEFF/,''));
+const runtime=await createRuntime({readJSON,seed:731,nowSeconds:1700000000});runtime.require('app/ai/JHAIConfig');
+runtime.vm.globals.loadstring=source=>compileLiteral(runtime.vm,source);
+const source=runtime.instantiate('app/data/JHBattleData');
+runtime.callMethod(source,'initWithID',10010);runtime.callMethod(source,'setType',1);runtime.callMethod(source,'setLevel',90);runtime.callMethod(source,'setStand',7);runtime.callMethod(source,'setName','synthetic-private-label');
+const equipment=runtime.instantiate('app/data/JHEquipData');
+const weaponConfig=[...runtime.configFor('equipment').entries.values()].find(row=>runtime.vm.get(row,'type')===1);
+assert(weaponConfig,'Synthetic unarmed weapon configuration must exist.');
+runtime.callMethod(equipment,'initWithID',runtime.vm.get(weaponConfig,'id'));
+runtime.vm.set(equipment,'m_nAtk',100);runtime.callMethod(equipment,'addExtProps','atk_add',123);runtime.callMethod(equipment,'addSpecial','blood',0.03);
+runtime.callMethod(source,'addEquip',equipment);runtime.callMethod(source,'resetBattle');
+const state=luaToJSON(runtime.firstMethod(source,'converToTable')),before=JSON.stringify(state);
+const row={uid:'synthetic-main',name:'合成主角',savedState:state,pvp:true};
+const first=await createSavedBattleRole(runtime,row,true,0),second=await createSavedBattleRole(runtime,row,true,0);
+const a=readSavedBattlePanel(runtime,first,row),b=readSavedBattlePanel(runtime,second,row);
+assert.equal(JSON.stringify(state),before,'Import must not mutate the caller private state.');
+const close=(x,y,label)=>assert(Math.abs(x-y)<1e-6,`${label}: ${x} vs ${y}`);
+for(const [key,value]of Object.entries(a.stats)){assert(Number.isFinite(value),key);close(value,b.stats[key],`repeat ${key}`);}
+for(const [field,method]of Object.entries({hp:'getHpDetail',atk:'getAttackDetail',def:'getDefenceDetail',speed:'getSpeedDetail'})){
+  close(a.stats[field],a.details[method][0],field);
+  close(a.details[method][0],a.details[method].slice(1).reduce((sum,value)=>sum+value,0),`${field} contribution sum`);
+}
+assert.equal(a.stats.weaponAtk,100,'The base weapon attack stays separate from extension attack.');
+close(a.advanced.blood,0.03,'Saved equipment special attachment');
+assert.equal(a.position,6);assert.equal(a.type,1);assert.equal(a.metadata.pvpNormalized,true);
+assert.equal(runtime.vm.get(first,'__RandSeed'),runtime.vm.get(second,'__RandSeed'),'Same comparison seed must create the same actor RNG cursor.');
+const text=JSON.stringify(a);
+assert(!text.includes('synthetic-private-label'),'The raw saved name must not be exported.');
+assert(!/"(?:savedState|Equips|OnlyID|S|MJSeed|CZSeed|Name)"\s*:/.test(text),'Public numeric summaries must not contain private raw state.');
+await assert.rejects(createSavedBattleRole(runtime,{...row,savedState:{ID:1,Level:90,Type:1,Stand:7}},true,0),/缺少/);
+await assert.rejects(createSavedBattleRole(runtime,{...row,level:91},true,0),/存档等级/);
+const anyNei=[...runtime.configFor('kongfu_ng_data').entries.values()].find(x=>runtime.vm.get(x,'id'));
+await assert.rejects(createSavedBattleRole(runtime,{...row,skills:{nei:runtime.vm.get(anyNei,'id')}},true,0),/未拥有/);
+const syntheticNeis=[...runtime.configFor('kongfu_ng_data').entries.values()].map(x=>runtime.vm.get(x,'id')).filter(Number.isInteger).slice(0,2);
+assert.equal(syntheticNeis.length,2);
+const learnedAssumptions={nei:syntheticNeis.map(id=>({id,chong:10,level:3,jingjins:[]}))};
+const borrowed=await createSavedBattleRole(runtime,{...row,learnedAssumptions,skills:{nei:syntheticNeis[0]}},true,0);
+const borrowedState=luaToJSON(runtime.firstMethod(borrowed,'converToTable'));
+const switched=await createSavedBattleRole(runtime,{...row,savedState:borrowedState,skills:{nei:syntheticNeis[1]}},true,0);
+assert.equal(runtime.firstMethod(runtime.firstMethod(switched,'getActiveNei'),'getID'),syntheticNeis[1],'An owned switch must deactivate the previous inner skill.');
+assert.equal([...runtime.firstMethod(switched,'getNeis').entries.values()].filter(skill=>runtime.firstMethod(skill,'getActive')).length,1,'Exactly one inner skill may be active.');
+assert.equal(runtime.firstMethod(switched,'getNeis').entries.size,2,'Switching cannot add duplicate learned skills.');
+const party=savedPartyRows({data:{MainRole:state,Roles:[]}});assert.equal(party.length,1);assert.equal(party[0].savedState,state);
+for(const cls of ['JHPropData','JHPropStoryData','JHOneData'])assert(runtime.instantiate(`app/data/${cls}`));
+assert.equal(runtime.vm.globals.JHOSTimeSec(),1700000000,'Original timed buffs must use the frozen replay clock.');
+assert.equal(runtime.vm.maxInstructions,5000000,'The default original VM instruction guard remains unchanged.');
+const enlarged=await createRuntime({readJSON,instructionBudget:20000000});assert.equal(enlarged.vm.maxInstructions,20000000);
+await assert.rejects(createRuntime({readJSON,instructionBudget:0}),/positive safe integer/);
+console.log('save-panel: synthetic full-state import, equipment properties, numeric detail sums, owned skill switching, repeatability and privacy passed');

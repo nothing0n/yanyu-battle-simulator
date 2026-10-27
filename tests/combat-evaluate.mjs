@@ -1,0 +1,15 @@
+import fs from 'node:fs';
+import assert from 'node:assert/strict';
+import {evaluateAttack} from '../dist/engine/evaluate-attack.mjs';
+const options={readJSON:async url=>JSON.parse(fs.readFileSync(url,'utf8'))};
+const input={attacker:{level:90,stats:{atk:4500,hit:1000,speed:700,str:200}},defender:{level:90,stats:{def:2500,dodge:500,parry:650,con:200}},seed:1001};
+const first=await evaluateAttack(input,options),again=await evaluateAttack(input,options);
+assert.deepEqual(first,again,'Same source input/seed must replay identically');
+assert.equal(first.damage,2863);assert.equal(first.damageMin,2834);assert.equal(first.damageMax,2950);
+const reduced=await evaluateAttack({...input,attacker:{...input.attacker,stats:{...input.attacker.stats,atk:2250}}},options);
+assert.ok(reduced.damage<first.damage);
+const parried=await evaluateAttack({...input,parried:true},options);
+assert.ok(parried.damage<first.damage);assert.equal(parried.parryResult,1);
+assert.equal(first.metadata.fullCombatParity,false);
+assert.ok(first.metadata.unsupported.length>0);
+console.log('PASS original attack adapter: seeded replay, verified vector, attack scaling, parry branch, explicit scope.');

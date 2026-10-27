@@ -1,0 +1,309 @@
+{
+  "version": 1,
+  "name": "初始演武阵容",
+  "seed": 20261024,
+  "maxRounds": 50,
+  "teams": {
+    "ally": [
+      {
+        "uid": "r-mvmoqqai-0dukc",
+        "roleId": 10010,
+        "name": "主角",
+        "position": 1,
+        "level": 90,
+        "skills": {
+          "wai": 20390,
+          "nei": 22280,
+          "qing": 24320
+        },
+        "skillLevels": {
+          "wai": 10,
+          "nei": 10,
+          "qing": 10
+        },
+        "stats": {
+          "hp": 16000,
+          "atk": 3500,
+          "def": 2800,
+          "speed": 1200,
+          "hit": 1400,
+          "dodge": 800,
+          "parry": 900,
+          "mp": 40,
+          "mpBack": 8,
+          "str": 200,
+          "dex": 200,
+          "con": 200,
+          "int": 200,
+          "neijin": 0,
+          "gangqi": 0,
+          "weaponAtk": 0
+        },
+        "team": "ally",
+        "weaponSkin": 207
+      },
+      {
+        "uid": "r-mvmoqqai-y1kwz",
+        "roleId": 10012,
+        "name": "苏念雪",
+        "position": 2,
+        "level": 90,
+        "skills": {
+          "wai": 20020,
+          "nei": 22080,
+          "qing": 24010
+        },
+        "skillLevels": {
+          "wai": 10,
+          "nei": 10,
+          "qing": 10
+        },
+        "stats": {
+          "hp": 16000,
+          "atk": 3500,
+          "def": 2800,
+          "speed": 1200,
+          "hit": 1400,
+          "dodge": 800,
+          "parry": 900,
+          "mp": 40,
+          "mpBack": 8,
+          "str": 200,
+          "dex": 200,
+          "con": 200,
+          "int": 200,
+          "neijin": 0,
+          "gangqi": 0,
+          "weaponAtk": 0
+        },
+        "team": "ally",
+        "weaponSkin": 307
+      },
+      {
+        "uid": "r-mvmoqqai-4hslh",
+        "roleId": 10011,
+        "name": "陈元封",
+        "position": 3,
+        "level": 90,
+        "skills": {
+          "wai": 20440,
+          "nei": 22160,
+          "qing": 24010
+        },
+        "skillLevels": {
+          "wai": 10,
+          "nei": 10,
+          "qing": 10
+        },
+        "stats": {
+          "hp": 16000,
+          "atk": 3500,
+          "def": 2800,
+          "speed": 1200,
+          "hit": 1400,
+          "dodge": 800,
+          "parry": 900,
+          "mp": 40,
+          "mpBack": 8,
+          "str": 200,
+          "dex": 200,
+          "con": 200,
+          "int": 200,
+          "neijin": 0,
+          "gangqi": 0,
+          "weaponAtk": 0
+        },
+        "team": "ally",
+        "weaponSkin": 406
+      },
+      {
+        "uid": "r-mvmoqqai-de1k5",
+        "roleId": 10015,
+        "name": "柳如意",
+        "position": 4,
+        "level": 90,
+        "skills": {
+          "wai": 20460,
+          "nei": 22250,
+          "qing": 24410
+        },
+        "skillLevels": {
+          "wai": 10,
+          "nei": 10,
+          "qing": 10
+        },
+        "stats": {
+          "hp": 16000,
+          "atk": 3500,
+          "def": 2800,
+          "speed": 1200,
+          "hit": 1400,
+          "dodge": 800,
+          "parry": 900,
+          "mp": 40,
+          "mpBack": 8,
+          "str": 200,
+          "dex": 200,
+          "con": 200,
+          "int": 200,
+          "neijin": 0,
+          "gangqi": 0,
+          "weaponAtk": 0
+        },
+        "team": "ally",
+        "weaponSkin": 110
+      }
+    ],
+    "enemy": [
+      {
+        "uid": "r-mvmoqqai-99i6p",
+        "roleId": 10031,
+        "name": "商昊乾",
+        "position": 1,
+        "level": 90,
+        "skills": {
+          "wai": 20030,
+          "nei": 22080,
+          "qing": 24120
+        },
+        "skillLevels": {
+          "wai": 10,
+          "nei": 10,
+          "qing": 10
+        },
+        "stats": {
+          "hp": 16000,
+          "atk": 3500,
+          "def": 2800,
+          "speed": 1200,
+          "hit": 1400,
+          "dodge": 800,
+          "parry": 900,
+          "mp": 40,
+          "mpBack": 8,
+          "str": 200,
+          "dex": 200,
+          "con": 200,
+          "int": 200,
+          "neijin": 0,
+          "gangqi": 0,
+          "weaponAtk": 0
+        },
+        "team": "enemy",
+        "weaponSkin": 207
+      },
+      {
+        "uid": "r-mvmoqqai-r9mu2",
+        "roleId": 10030,
+        "name": "李一尘",
+        "position": 2,
+        "level": 90,
+        "skills": {
+          "wai": 20440,
+          "nei": 22160,
+          "qing": 24010
+        },
+        "skillLevels": {
+          "wai": 10,
+          "nei": 10,
+          "qing": 10
+        },
+        "stats": {
+          "hp": 16000,
+          "atk": 3500,
+          "def": 2800,
+          "speed": 1200,
+          "hit": 1400,
+          "dodge": 800,
+          "parry": 900,
+          "mp": 40,
+          "mpBack": 8,
+          "str": 200,
+          "dex": 200,
+          "con": 200,
+          "int": 200,
+          "neijin": 0,
+          "gangqi": 0,
+          "weaponAtk": 0
+        },
+        "team": "enemy",
+        "weaponSkin": 406
+      },
+      {
+        "uid": "r-mvmoqqai-zln7w",
+        "roleId": 10026,
+        "name": "姜逸尘",
+        "position": 3,
+        "level": 90,
+        "skills": {
+          "wai": 20460,
+          "nei": 22250,
+          "qing": 24410
+        },
+        "skillLevels": {
+          "wai": 10,
+          "nei": 10,
+          "qing": 10
+        },
+        "stats": {
+          "hp": 16000,
+          "atk": 3500,
+          "def": 2800,
+          "speed": 1200,
+          "hit": 1400,
+          "dodge": 800,
+          "parry": 900,
+          "mp": 40,
+          "mpBack": 8,
+          "str": 200,
+          "dex": 200,
+          "con": 200,
+          "int": 200,
+          "neijin": 0,
+          "gangqi": 0,
+          "weaponAtk": 0
+        },
+        "team": "enemy",
+        "weaponSkin": 110
+      },
+      {
+        "uid": "r-mvmoqqai-x1cio",
+        "roleId": 10029,
+        "name": "月蓉",
+        "position": 4,
+        "level": 90,
+        "skills": {
+          "wai": 20390,
+          "nei": 22280,
+          "qing": 24320
+        },
+        "skillLevels": {
+          "wai": 10,
+          "nei": 10,
+          "qing": 10
+        },
+        "stats": {
+          "hp": 16000,
+          "atk": 3500,
+          "def": 2800,
+          "speed": 1200,
+          "hit": 1400,
+          "dodge": 800,
+          "parry": 900,
+          "mp": 40,
+          "mpBack": 8,
+          "str": 200,
+          "dex": 200,
+          "con": 200,
+          "int": 200,
+          "neijin": 0,
+          "gangqi": 0,
+          "weaponAtk": 0
+        },
+        "team": "enemy",
+        "weaponSkin": 207
+      }
+    ]
+  },
+  "sceneId": 10
+}
